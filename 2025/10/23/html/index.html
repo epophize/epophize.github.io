@@ -1,0 +1,633 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>html 基础 | epophize的前端资料库</title><meta name="author" content="epophize"><meta name="copyright" content="epophize"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="📘 HTML 核心知识点整理一、HTML 基础概念   概念 说明    全称 HyperText Markup Language（超文本标记语言）   定位 用于创建网页的标准标记语言，不是编程语言   运行环境 运行在浏览器中，默认由浏览器解析并渲染成可视页面   组成 由一套标记标签（Tags）和文本内容组成，用于描述和编辑网页结构   文档别称 HTML 文档通常被称为 Web 页面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="html 基础">
+<meta property="og:url" content="http://example.com/2025/10/23/html/index.html">
+<meta property="og:site_name" content="epophize的前端资料库">
+<meta property="og:description" content="📘 HTML 核心知识点整理一、HTML 基础概念   概念 说明    全称 HyperText Markup Language（超文本标记语言）   定位 用于创建网页的标准标记语言，不是编程语言   运行环境 运行在浏览器中，默认由浏览器解析并渲染成可视页面   组成 由一套标记标签（Tags）和文本内容组成，用于描述和编辑网页结构   文档别称 HTML 文档通常被称为 Web 页面">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/head.jpg">
+<meta property="article:published_time" content="2025-10-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-26T12:11:42.601Z">
+<meta property="article:author" content="epophize">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/head.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "html 基础",
+  "url": "http://example.com/2025/10/23/html/",
+  "image": "http://example.com/img/head.jpg",
+  "datePublished": "2025-10-22T16:00:00.000Z",
+  "dateModified": "2026-04-26T12:11:42.601Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "epophize",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/blog-solid.png"><link rel="canonical" href="http://example.com/2025/10/23/html/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5-b1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'html 基础',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/img/doro.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/doro.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/head.jpg" alt="Logo"><span class="site-name">epophize的前端资料库</span></a><a class="nav-page-title" href="/"><span class="site-name">html 基础</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">html 基础</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-10-22T16:00:00.000Z" title="发表于 2025-10-23 00:00:00">2025-10-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-26T12:11:42.601Z" title="更新于 2026-04-26 20:11:42">2026-04-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="📘-HTML-核心知识点整理"><a href="#📘-HTML-核心知识点整理" class="headerlink" title="📘 HTML 核心知识点整理"></a>📘 HTML 核心知识点整理</h1><h2 id="一、HTML-基础概念"><a href="#一、HTML-基础概念" class="headerlink" title="一、HTML 基础概念"></a>一、HTML 基础概念</h2><table>
+<thead>
+<tr>
+<th align="left">概念</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>全称</strong></td>
+<td align="left"><code>HyperText Markup Language</code>（超文本标记语言）</td>
+</tr>
+<tr>
+<td align="left"><strong>定位</strong></td>
+<td align="left">用于创建网页的标准标记语言，<strong>不是编程语言</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>运行环境</strong></td>
+<td align="left">运行在浏览器中，默认由浏览器解析并渲染成可视页面</td>
+</tr>
+<tr>
+<td align="left"><strong>组成</strong></td>
+<td align="left">由一套标记标签（Tags）和文本内容组成，用于描述和编辑网页结构</td>
+</tr>
+<tr>
+<td align="left"><strong>文档别称</strong></td>
+<td align="left">HTML 文档通常被称为 <strong>Web 页面</strong></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="二、浏览器与内核"><a href="#二、浏览器与内核" class="headerlink" title="二、浏览器与内核"></a>二、浏览器与内核</h2><ul>
+<li><strong>常见浏览器</strong>：Chrome、Firefox、Safari、IE、Edge、360、QQ、UC、搜狗、Opera 等。</li>
+<li><strong>浏览器核心引擎</strong>：<ul>
+<li>🖥️ <strong>渲染引擎（排版引擎）</strong>：获取 HTML&#x2F;CSS 内容，解析并显示网页布局与样式。<ul>
+<li>Chrome &#x2F; 新版 Edge → <code>Blink</code></li>
+<li>Firefox → <code>Gecko</code></li>
+<li>IE → <code>Trident</code></li>
+<li>Safari → <code>WebKit</code></li>
+</ul>
+</li>
+<li>⚙️ <strong>JS 引擎</strong>：负责解析和执行 JavaScript 代码。</li>
+<li>🖥️ <strong>w3c</strong>:万维网联盟,W3C是对web进行标准化的国际组织</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="三、HTML-标签与元素"><a href="#三、HTML-标签与元素" class="headerlink" title="三、HTML 标签与元素"></a>三、HTML 标签与元素</h2><ul>
+<li><strong>HTML 标签（Tag）</strong>：通常由尖括号 <code>&lt; &gt;</code> 包裹关键词组成，如 <code>&lt;html&gt;</code>。</li>
+<li><strong>成对结构</strong>：大多数标签成对出现<ul>
+<li><code>&lt;标签名&gt;</code> → 开始标签（开放标签）</li>
+<li><code>&lt;/标签名&gt;</code> → 结束标签（闭合标签）</li>
+<li>完整结构：<code>&lt;开始标签&gt;文本内容&lt;/结束标签&gt;</code></li>
+</ul>
+</li>
+<li><strong>HTML 元素（Element）</strong>：通常与“标签”混用。严格来说，<strong>元素 &#x3D; 开始标签 + 内容 + 结束标签</strong>。</li>
+<li><strong>单标签</strong>：部分标签无需闭合，如 <code>&lt;br&gt;</code>、<code>&lt;hr&gt;</code>、<code>&lt;img&gt;</code>、<code>&lt;input&gt;</code>。</li>
+</ul>
+<hr>
+<h2 id="四、标签分类与嵌套规则"><a href="#四、标签分类与嵌套规则" class="headerlink" title="四、标签分类与嵌套规则"></a>四、标签分类与嵌套规则</h2><h3 id="1-显示特性分类"><a href="#1-显示特性分类" class="headerlink" title="1. 显示特性分类"></a>1. 显示特性分类</h3><table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">特性</th>
+<th align="left">常见标签</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>行内元素（Inline）</strong></td>
+<td align="left">一行可排列多个，不自动换行，默认不支持设置宽高</td>
+<td align="left"><code>span</code>, <code>strong</code>, <code>b</code>, <code>em</code>, <code>i</code>, <code>var</code>, <code>u</code>, <code>ins</code>, <code>del</code>, <code>s</code>, <code>sup</code>, <code>sub</code>, <code>big</code>, <code>small</code>, <code>a</code>, <code>img</code>, <code>label</code>, <code>input</code>, <code>select</code>, <code>button</code>, <code>textarea</code></td>
+</tr>
+<tr>
+<td align="left"><strong>块级元素（Block）</strong></td>
+<td align="left">独占一行，自动换行，支持设置宽高</td>
+<td align="left"><code>h1~h6</code>, <code>p</code>, <code>hr</code>, <code>div</code>, <code>address</code>, <code>pre</code>, <code>table</code>, <code>tr</code>, <code>caption</code>, <code>thead</code>, <code>tbody</code>, <code>tfoot</code>, <code>form</code>, <code>option</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>💡 注：现代 CSS 中还有 <code>inline-block</code>（行内块）等类型，此处按传统分类整理。</p>
+</blockquote>
+<h3 id="2-嵌套规则"><a href="#2-嵌套规则" class="headerlink" title="2. 嵌套规则"></a>2. 嵌套规则</h3><ol>
+<li>行内元素可嵌套行内元素，<strong>不可嵌套块级元素</strong>。</li>
+<li>块级元素可嵌套块级元素，也可嵌套行内元素。</li>
+<li><strong>特殊限制</strong>：<code>h1~h6</code>、<code>p</code>、<code>address</code> 只能嵌套行内元素，不可嵌套块级元素。</li>
+<li>块级元素嵌套时，同级元素类型应保持一致（块配块，行配行）。</li>
+</ol>
+<hr>
+<h2 id="五、常用基础标签"><a href="#五、常用基础标签" class="headerlink" title="五、常用基础标签"></a>五、常用基础标签</h2><h3 id="1-标题与段落"><a href="#1-标题与段落" class="headerlink" title="1. 标题与段落"></a>1. 标题与段落</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>一级标题（SEO建议页面仅出现1次）<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>二级标题（尽量少用）<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h3</span>&gt;</span>三级标题（建议多用）<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h4</span>&gt;</span>四级标题<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h5</span>&gt;</span>五级标题<span class="tag">&lt;/<span class="name">h5</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h6</span>&gt;</span>六级标题<span class="tag">&lt;/<span class="name">h6</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>段落标签，自动上下留白<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-换行与分割"><a href="#2-换行与分割" class="headerlink" title="2. 换行与分割"></a>2. 换行与分割</h3><ul>
+<li><code>&lt;br&gt;</code>：强制换行（单标签）</li>
+<li><code>&lt;hr size=&quot;30&quot;&gt;</code>：水平分割线（<code>size</code> 控制高度，HTML5中建议用CSS替代）</li>
+</ul>
+<h3 id="3-文本格式化"><a href="#3-文本格式化" class="headerlink" title="3. 文本格式化"></a>3. 文本格式化</h3><table>
+<thead>
+<tr>
+<th align="left">效果</th>
+<th align="left">语义化标签（推荐）</th>
+<th align="left">纯样式标签</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>加粗</strong></td>
+<td align="left"><code>&lt;strong&gt;</code></td>
+<td align="left"><code>&lt;b&gt;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>倾斜&#x2F;强调</strong></td>
+<td align="left"><code>&lt;em&gt;</code></td>
+<td align="left"><code>&lt;i&gt;</code>, <code>&lt;var&gt;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>下划线</strong></td>
+<td align="left"><code>&lt;ins&gt;</code>（插入）</td>
+<td align="left"><code>&lt;u&gt;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>删除线</strong></td>
+<td align="left"><code>&lt;del&gt;</code>（删除）</td>
+<td align="left"><code>&lt;s&gt;</code>, <code>&lt;strike&gt;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>字号</strong></td>
+<td align="left"><code>&lt;small&gt;</code>（小）, <code>&lt;big&gt;</code>（大）</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>上下标</strong></td>
+<td align="left"><code>&lt;sub&gt;</code>（下标）, <code>&lt;sup&gt;</code>（上标）</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>预格式</strong></td>
+<td align="left"><code>&lt;pre&gt;</code>（保留空格与换行）</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>地址</strong></td>
+<td align="left"><code>&lt;address&gt;</code></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>内联容器</strong></td>
+<td align="left"><code>&lt;span&gt;</code>（纯文本&#x2F;样式钩子）</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>块级容器</strong></td>
+<td align="left"><code>&lt;div&gt;</code>（布局&#x2F;盒模型）</td>
+<td align="left">-</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="六、图片与超链接"><a href="#六、图片与超链接" class="headerlink" title="六、图片与超链接"></a>六、图片与超链接</h2><h3 id="🖼️-图片标签-（单标签）"><a href="#🖼️-图片标签-（单标签）" class="headerlink" title="🖼️ 图片标签 &lt;img&gt;（单标签）"></a>🖼️ 图片标签 <code>&lt;img&gt;</code>（单标签）</h3><table>
+<thead>
+<tr>
+<th align="left">属性</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>src</code></td>
+<td align="left">图片路径&#x2F;URL（绝对或相对路径）</td>
+</tr>
+<tr>
+<td align="left"><code>width</code> &#x2F; <code>height</code></td>
+<td align="left">宽高（默认单位 <code>px</code>）。<strong>仅设其一，另一项会等比例缩放</strong></td>
+</tr>
+<tr>
+<td align="left"><code>alt</code></td>
+<td align="left">图片加载失败时的替代文本（辅助功能 &amp; SEO必备）</td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left">鼠标悬停时显示的提示文本</td>
+</tr>
+<tr>
+<td align="left"><code>draggable</code></td>
+<td align="left">是否允许拖拽，值为 <code>true</code> 或 <code>false</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>📁 <strong>路径说明</strong>：</p>
+<ul>
+<li><code>./</code> 当前目录，<code>../</code> 上一级目录，<code>/</code> 根目录或下一级</li>
+<li>绝对路径：完整服务器地址（如 <code>https://example.com/img.png</code>）</li>
+</ul>
+</blockquote>
+<h3 id="🔗-超链接标签"><a href="#🔗-超链接标签" class="headerlink" title="🔗 超链接标签 &lt;a&gt;"></a>🔗 超链接标签 <code>&lt;a&gt;</code></h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;目标地址&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>点击跳转<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th align="left">属性</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>href</code></td>
+<td align="left">跳转目标地址（绝对&#x2F;相对路径）。<strong>仅引用，点击时才加载</strong></td>
+</tr>
+<tr>
+<td align="left"><code>target</code></td>
+<td align="left">打开位置：<code>_self</code>（默认当前页）、<code>_blank</code>（新窗口）、<code>_top</code>（顶级窗口）、<code>_parent</code>（父窗口）</td>
+</tr>
+<tr>
+<td align="left"><code>download</code></td>
+<td align="left">触发文件下载</td>
+</tr>
+<tr>
+<td align="left"><code>media</code></td>
+<td align="left">规定链接资源的媒体类型</td>
+</tr>
+</tbody></table>
+<h4 id="🔖-锚点定位"><a href="#🔖-锚点定位" class="headerlink" title="🔖 锚点定位"></a>🔖 锚点定位</h4><ol>
+<li><strong>定义锚点</strong>：在目标元素添加 <code>id=&quot;锚点名&quot;</code>（或旧版 <code>&lt;a name=&quot;锚点名&quot;&gt;</code>）<blockquote>
+<p>⚠️ <code>id</code> 命名规范：以字母或 <code>_</code> 开头，不可为纯数字或中文。如 <code>one</code>, <code>_section1</code>, <code>menu_2</code></p>
+</blockquote>
+</li>
+<li><strong>跳转链接</strong>：<code>&lt;a href=&quot;#锚点名&quot;&gt;跳转到指定位置&lt;/a&gt;</code></li>
+</ol>
+<blockquote>
+<p>🎨 <strong>默认样式</strong>：未访问蓝色带下划线 → 访问中红色 → 访问后紫色</p>
+</blockquote>
+<hr>
+<h2 id="七、列表标签"><a href="#七、列表标签" class="headerlink" title="七、列表标签"></a>七、列表标签</h2><table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">标签</th>
+<th align="left">常用属性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>有序列表</strong></td>
+<td align="left"><code>&lt;ol&gt;</code> + <code>&lt;li&gt;</code></td>
+<td align="left"><code>type</code>（<code>1</code>, <code>A</code>, <code>a</code>, <code>I</code>, <code>i</code>）<br><code>reversed</code>（倒序）<br><code>start</code>（起始数字）</td>
+</tr>
+<tr>
+<td align="left"><strong>无序列表</strong></td>
+<td align="left"><code>&lt;ul&gt;</code> + <code>&lt;li&gt;</code></td>
+<td align="left"><code>type</code>（<code>disc</code>实心圆, <code>circle</code>空心圆, <code>square</code>实心方块）</td>
+</tr>
+<tr>
+<td align="left"><strong>列表项</strong></td>
+<td align="left"><code>&lt;li&gt;</code></td>
+<td align="left"><code>type</code>（覆盖父级样式）, <code>value</code>（自定义序号值）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="八、表格标签"><a href="#八、表格标签" class="headerlink" title="八、表格标签"></a>八、表格标签</h2><h3 id="基础结构"><a href="#基础结构" class="headerlink" title="基础结构"></a>基础结构</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">&quot;1&quot;</span> <span class="attr">cellpadding</span>=<span class="string">&quot;10&quot;</span> <span class="attr">cellspacing</span>=<span class="string">&quot;0&quot;</span> <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">caption</span> <span class="attr">align</span>=<span class="string">&quot;top&quot;</span>&gt;</span>表格标题<span class="tag">&lt;/<span class="name">caption</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">tr</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span> <span class="attr">valign</span>=<span class="string">&quot;middle&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">th</span>&gt;</span>表头单元格（默认居中加粗）<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>数据单元格<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th align="left">标签</th>
+<th align="left">说明</th>
+<th align="left">常用属性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>&lt;table&gt;</code></td>
+<td align="left">表格容器</td>
+<td align="left"><code>border</code>, <code>bgcolor</code>, <code>width</code>, <code>height</code>, <code>align</code>, <code>cellpadding</code>（内容与边框距离）, <code>cellspacing</code>（单元格间距）</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;tr&gt;</code></td>
+<td align="left">表格行</td>
+<td align="left"><code>bgcolor</code>, <code>align</code>（水平）, <code>valign</code>（垂直：<code>top</code>&#x2F;<code>middle</code>&#x2F;<code>bottom</code>）</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;th&gt;</code></td>
+<td align="left">表头单元格</td>
+<td align="left">继承 <code>&lt;td&gt;</code> 所有属性，默认文本居中加粗</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;td&gt;</code></td>
+<td align="left">数据单元格</td>
+<td align="left"><code>bgcolor</code>, <code>align</code>, <code>valign</code>, <code>width</code>, <code>height</code><br>⚠️ 设置单个 <code>td</code> 宽高会影响整列&#x2F;整行</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;caption&gt;</code></td>
+<td align="left">表格标题</td>
+<td align="left"><code>align</code>（<code>top</code>&#x2F;<code>bottom</code>）</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;thead&gt;</code> <code>&lt;tbody&gt;</code> <code>&lt;tfoot&gt;</code></td>
+<td align="left">语义化分区</td>
+<td align="left">增强可读性，利于样式控制与打印分页</td>
+</tr>
+</tbody></table>
+<h4 id="🔗-合并单元格"><a href="#🔗-合并单元格" class="headerlink" title="🔗 合并单元格"></a>🔗 合并单元格</h4><ul>
+<li><code>colspan=&quot;n&quot;</code>：<strong>向右合并</strong>（跨列）</li>
+<li><code>rowspan=&quot;n&quot;</code>：<strong>向下合并</strong>（跨行）<blockquote>
+<p>💡 <strong>标准文档流</strong>：元素默认从左到右、从上到下自动流式排列。</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h2 id="九、表单标签（收集用户输入）"><a href="#九、表单标签（收集用户输入）" class="headerlink" title="九、表单标签（收集用户输入）"></a>九、表单标签（收集用户输入）</h2><h3 id="📦-表单容器"><a href="#📦-表单容器" class="headerlink" title="📦 表单容器 &lt;form&gt;"></a>📦 表单容器 <code>&lt;form&gt;</code></h3><table>
+<thead>
+<tr>
+<th align="left">属性</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>action</code></td>
+<td align="left">数据提交的服务器地址&#x2F;路径</td>
+</tr>
+<tr>
+<td align="left"><code>method</code></td>
+<td align="left">提交方式：<code>get</code>（参数附在URL） &#x2F; <code>post</code>（参数在请求体，更安全）</td>
+</tr>
+</tbody></table>
+<h3 id="📝-常用表单元素"><a href="#📝-常用表单元素" class="headerlink" title="📝 常用表单元素"></a>📝 常用表单元素</h3><h4 id="1-单行输入框"><a href="#1-单行输入框" class="headerlink" title="1. &lt;input&gt; 单行输入框"></a>1. <code>&lt;input&gt;</code> 单行输入框</h4><table>
+<thead>
+<tr>
+<th align="left"><code>type</code> 值</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>text</code></td>
+<td align="left">普通文本</td>
+</tr>
+<tr>
+<td align="left"><code>password</code></td>
+<td align="left">密码（字符隐藏）</td>
+</tr>
+<tr>
+<td align="left"><code>checkbox</code></td>
+<td align="left">多选框（配合 <code>name</code> 分组，可用 <code>label</code> 绑定文字）</td>
+</tr>
+<tr>
+<td align="left"><code>radio</code></td>
+<td align="left">单选框（<strong>必须同名</strong> <code>name</code> 实现互斥）</td>
+</tr>
+<tr>
+<td align="left"><code>file</code></td>
+<td align="left">文件上传</td>
+</tr>
+<tr>
+<td align="left"><code>number</code></td>
+<td align="left">数字输入</td>
+</tr>
+<tr>
+<td align="left"><code>date</code> &#x2F; <code>datetime-local</code></td>
+<td align="left">日期 &#x2F; 日期时间</td>
+</tr>
+<tr>
+<td align="left"><code>image</code></td>
+<td align="left">图片提交按钮</td>
+</tr>
+<tr>
+<td align="left"><code>submit</code> &#x2F; <code>reset</code> &#x2F; <code>button</code></td>
+<td align="left">提交 &#x2F; 重置 &#x2F; 普通按钮</td>
+</tr>
+</tbody></table>
+<p><strong>通用属性</strong>：</p>
+<ul>
+<li><code>max</code>&#x2F;<code>min</code>&#x2F;<code>step</code>（适用于 <code>number</code>&#x2F;<code>range</code>）</li>
+<li><code>maxlength</code>：最大字符长度</li>
+<li><code>placeholder</code>：输入提示文本</li>
+<li><code>value</code>：默认值&#x2F;预输入值</li>
+<li><code>checked</code>：默认选中（仅 <code>checkbox</code>&#x2F;<code>radio</code>）</li>
+<li><code>disabled</code>：禁用（不可交互，值不提交）</li>
+<li><code>readonly</code>：只读（可交互，值正常提交）</li>
+<li><code>name</code>：字段名称（提交时作为键名）</li>
+<li><code>autofocus</code>：自动获取焦点</li>
+<li><code>required</code>：必填校验</li>
+<li><code>size</code>：输入框可见字符宽度（默认20）</li>
+</ul>
+<h4 id="2-其他表单控件"><a href="#2-其他表单控件" class="headerlink" title="2. 其他表单控件"></a>2. 其他表单控件</h4><table>
+<thead>
+<tr>
+<th align="left">标签</th>
+<th align="left">说明</th>
+<th align="left">核心属性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>&lt;select&gt;</code></td>
+<td align="left">下拉列表</td>
+<td align="left">内部嵌套 <code>&lt;option&gt;</code> 或 <code>&lt;optgroup&gt;</code></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;option&gt;</code></td>
+<td align="left">下拉选项</td>
+<td align="left"><code>selected</code>（默认选中）</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;optgroup&gt;</code></td>
+<td align="left">选项分组</td>
+<td align="left"><code>label</code>（分组标题）</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;textarea&gt;</code></td>
+<td align="left">多行文本域</td>
+<td align="left"><code>rows</code>（行高）, <code>cols</code>（列宽）<br>支持 <code>autofocus</code>, <code>placeholder</code>, <code>readonly</code>, <code>required</code>, <code>disabled</code>, <code>maxlength</code></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;label&gt;</code></td>
+<td align="left">关联文本</td>
+<td align="left"><code>for=&quot;对应元素id&quot;</code> 或包裹元素，<strong>扩大点击范围</strong></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;button&gt;</code></td>
+<td align="left">按钮</td>
+<td align="left">默认类型 <code>submit</code>，可用 <code>type=&quot;button&quot;</code> 改为普通按钮</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;fieldset&gt;</code></td>
+<td align="left">表单分组</td>
+<td align="left">自带外边框</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;legend&gt;</code></td>
+<td align="left">分组标题</td>
+<td align="left">配合 <code>&lt;fieldset&gt;</code> 使用</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="十、头部文档与内联框架"><a href="#十、头部文档与内联框架" class="headerlink" title="十、头部文档与内联框架"></a>十、头部文档与内联框架</h2><h3 id="📄-头部标签（位于-内，不直接显示在页面）"><a href="#📄-头部标签（位于-内，不直接显示在页面）" class="headerlink" title="📄 头部标签（位于 &lt;head&gt; 内，不直接显示在页面）"></a>📄 头部标签（位于 <code>&lt;head&gt;</code> 内，不直接显示在页面）</h3><table>
+<thead>
+<tr>
+<th align="left">标签</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>&lt;title&gt;</code></td>
+<td align="left"><strong>文档标题</strong>：显示在浏览器标签页、收藏夹、搜索引擎结果页。<strong>HTML文档必需</strong>。</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;meta&gt;</code></td>
+<td align="left">元数据：描述网页字符集、关键词、作者、视口设置等。不渲染在页面。</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;link&gt;</code></td>
+<td align="left">引入外部资源。常用：<code>&lt;link rel=&quot;shortcut icon&quot; href=&quot;path/to/icon.ico&quot;&gt;</code>（网站图标，常用尺寸 16×16 或 32×32）</td>
+</tr>
+</tbody></table>
+<h3 id="🖼️-内联框架"><a href="#🖼️-内联框架" class="headerlink" title="🖼️ 内联框架 &lt;iframe&gt;"></a>🖼️ 内联框架 <code>&lt;iframe&gt;</code></h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;目标网页路径&quot;</span> <span class="attr">width</span>=<span class="string">&quot;600&quot;</span> <span class="attr">height</span>=<span class="string">&quot;400&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;0&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myFrame&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th align="left">属性</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>src</code></td>
+<td align="left">嵌入网页的路径（绝对&#x2F;相对）</td>
+</tr>
+<tr>
+<td align="left"><code>width</code> &#x2F; <code>height</code></td>
+<td align="left">框架宽高（默认 <code>px</code>）</td>
+</tr>
+<tr>
+<td align="left"><code>frameborder</code></td>
+<td align="left">是否显示边框：<code>1</code>（默认有边框） &#x2F; <code>0</code>（无边框）</td>
+</tr>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left">框架名称，可被 <code>&lt;a target=&quot;name&quot;&gt;</code> 或 <code>&lt;form target=&quot;name&quot;&gt;</code> 定向加载</td>
+</tr>
+</tbody></table>
+<hr>
+<p>📝 <strong>整理说明</strong>：</p>
+<ul>
+<li>已修正原文本中的拼写误差（如 <code>fales</code> → <code>false</code>，<code>alter</code> → <code>alt</code> 释义，<code>textara</code> → <code>textarea</code>）。</li>
+<li>采用表格与列表结构优化属性说明，便于快速查阅。</li>
+<li>保留了您笔记中的所有核心知识点，并按 HTML5 标准进行了逻辑归类与排版优化。可直接保存为 <code>.md</code> 文件使用。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">epophize</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2025/10/23/html/">http://example.com/2025/10/23/html/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">epophize的前端资料库</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/head.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/10/25/css/" title="css 基础"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">css 基础</div></div><div class="info-2"><div class="info-item-1">📘 CSS 核心知识点总结一、 前端三层架构   层次 技术 作用    结构层 HTML 搭建页面骨架与内容结构   表现层 CSS 美化页面，控制布局与视觉效果   行为层 JavaScript 实现交互逻辑与前后端数据通信    二、 CSS 概述 全称：Cascading Style Sheets（层叠样式表） 作用：定义如何显示 HTML 元素 发展意义：HTML 4.0 引入，核心目的是内容与表现分离 特点： 样式通常存储在外部 .css 文件中，可极大提高开发效率与维护性 多个样式定义可按规则层叠为一个最终样式 通配符选择器 * 可选取页面所有元素     三、 CSS 引入方式   方式 实现方法 特点    外部样式表（推荐） &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt; 写在 &lt;head&gt; 缓存复用，最常用   内部样式表 &lt;head&gt; 中使用 &lt;style&gt; 标签包裹 CSS 代码 适用于单页特定样式   内联样式 标签内直接写 st...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">epophize</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/epophize" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:3280578130@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%93%98-HTML-%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">📘 HTML 核心知识点整理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81HTML-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.</span> <span class="toc-text">一、HTML 基础概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E5%86%85%E6%A0%B8"><span class="toc-number">1.2.</span> <span class="toc-text">二、浏览器与内核</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81HTML-%E6%A0%87%E7%AD%BE%E4%B8%8E%E5%85%83%E7%B4%A0"><span class="toc-number">1.3.</span> <span class="toc-text">三、HTML 标签与元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB%E4%B8%8E%E5%B5%8C%E5%A5%97%E8%A7%84%E5%88%99"><span class="toc-number">1.4.</span> <span class="toc-text">四、标签分类与嵌套规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%98%BE%E7%A4%BA%E7%89%B9%E6%80%A7%E5%88%86%E7%B1%BB"><span class="toc-number">1.4.1.</span> <span class="toc-text">1. 显示特性分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%B5%8C%E5%A5%97%E8%A7%84%E5%88%99"><span class="toc-number">1.4.2.</span> <span class="toc-text">2. 嵌套规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%B8%B8%E7%94%A8%E5%9F%BA%E7%A1%80%E6%A0%87%E7%AD%BE"><span class="toc-number">1.5.</span> <span class="toc-text">五、常用基础标签</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A0%87%E9%A2%98%E4%B8%8E%E6%AE%B5%E8%90%BD"><span class="toc-number">1.5.1.</span> <span class="toc-text">1. 标题与段落</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%8D%A2%E8%A1%8C%E4%B8%8E%E5%88%86%E5%89%B2"><span class="toc-number">1.5.2.</span> <span class="toc-text">2. 换行与分割</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-number">1.5.3.</span> <span class="toc-text">3. 文本格式化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%9B%BE%E7%89%87%E4%B8%8E%E8%B6%85%E9%93%BE%E6%8E%A5"><span class="toc-number">1.6.</span> <span class="toc-text">六、图片与超链接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%96%BC%EF%B8%8F-%E5%9B%BE%E7%89%87%E6%A0%87%E7%AD%BE-%EF%BC%88%E5%8D%95%E6%A0%87%E7%AD%BE%EF%BC%89"><span class="toc-number">1.6.1.</span> <span class="toc-text">🖼️ 图片标签 &lt;img&gt;（单标签）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%97-%E8%B6%85%E9%93%BE%E6%8E%A5%E6%A0%87%E7%AD%BE"><span class="toc-number">1.6.2.</span> <span class="toc-text">🔗 超链接标签 &lt;a&gt;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%96-%E9%94%9A%E7%82%B9%E5%AE%9A%E4%BD%8D"><span class="toc-number">1.6.2.1.</span> <span class="toc-text">🔖 锚点定位</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%88%97%E8%A1%A8%E6%A0%87%E7%AD%BE"><span class="toc-number">1.7.</span> <span class="toc-text">七、列表标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E8%A1%A8%E6%A0%BC%E6%A0%87%E7%AD%BE"><span class="toc-number">1.8.</span> <span class="toc-text">八、表格标签</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%BB%93%E6%9E%84"><span class="toc-number">1.8.1.</span> <span class="toc-text">基础结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%97-%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC"><span class="toc-number">1.8.1.1.</span> <span class="toc-text">🔗 合并单元格</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E8%A1%A8%E5%8D%95%E6%A0%87%E7%AD%BE%EF%BC%88%E6%94%B6%E9%9B%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%EF%BC%89"><span class="toc-number">1.9.</span> <span class="toc-text">九、表单标签（收集用户输入）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%A6-%E8%A1%A8%E5%8D%95%E5%AE%B9%E5%99%A8"><span class="toc-number">1.9.1.</span> <span class="toc-text">📦 表单容器 &lt;form&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%9D-%E5%B8%B8%E7%94%A8%E8%A1%A8%E5%8D%95%E5%85%83%E7%B4%A0"><span class="toc-number">1.9.2.</span> <span class="toc-text">📝 常用表单元素</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8D%95%E8%A1%8C%E8%BE%93%E5%85%A5%E6%A1%86"><span class="toc-number">1.9.2.1.</span> <span class="toc-text">1. &lt;input&gt; 单行输入框</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%85%B6%E4%BB%96%E8%A1%A8%E5%8D%95%E6%8E%A7%E4%BB%B6"><span class="toc-number">1.9.2.2.</span> <span class="toc-text">2. 其他表单控件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E5%A4%B4%E9%83%A8%E6%96%87%E6%A1%A3%E4%B8%8E%E5%86%85%E8%81%94%E6%A1%86%E6%9E%B6"><span class="toc-number">1.10.</span> <span class="toc-text">十、头部文档与内联框架</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%84-%E5%A4%B4%E9%83%A8%E6%A0%87%E7%AD%BE%EF%BC%88%E4%BD%8D%E4%BA%8E-%E5%86%85%EF%BC%8C%E4%B8%8D%E7%9B%B4%E6%8E%A5%E6%98%BE%E7%A4%BA%E5%9C%A8%E9%A1%B5%E9%9D%A2%EF%BC%89"><span class="toc-number">1.10.1.</span> <span class="toc-text">📄 头部标签（位于 &lt;head&gt; 内，不直接显示在页面）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%96%BC%EF%B8%8F-%E5%86%85%E8%81%94%E6%A1%86%E6%9E%B6"><span class="toc-number">1.10.2.</span> <span class="toc-text">🖼️ 内联框架 &lt;iframe&gt;</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/21/vue/" title="Vue.js 前端框架">Vue.js 前端框架</a><time datetime="2025-12-20T16:00:00.000Z" title="发表于 2025-12-21 00:00:00">2025-12-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/15/ECharts%20%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8C%87%E5%8D%97/" title="Echarts">Echarts</a><time datetime="2025-12-14T16:00:00.000Z" title="发表于 2025-12-15 00:00:00">2025-12-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/01/Node.js%20%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/" title="Nodejs后端指南">Nodejs后端指南</a><time datetime="2025-11-30T16:00:00.000Z" title="发表于 2025-12-01 00:00:00">2025-12-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/19/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" title="开发工具与网络协议">开发工具与网络协议</a><time datetime="2025-11-18T16:00:00.000Z" title="发表于 2025-11-19 00:00:00">2025-11-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/01/JavaScript%20%E6%A0%B8%E5%BF%83%E4%B8%8E%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" title="js 基础与网络请求">js 基础与网络请求</a><time datetime="2025-10-31T16:00:00.000Z" title="发表于 2025-11-01 00:00:00">2025-11-01</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/doro.jpg);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By epophize</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5-b1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5-b1"></script><script src="/js/main.js?v=5.5.5-b1"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

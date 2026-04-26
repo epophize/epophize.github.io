@@ -1,0 +1,683 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>开发工具与网络协议 | epophize的前端资料库</title><meta name="author" content="epophize"><meta name="copyright" content="epophize"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="开发工具与网络协议 目录 Git 版本控制 Git 工作流 分支管理 远程协作 HTTP 协议 HTTP 状态码   一、Git 版本控制1.1 什么是版本控制？版本控制系统 (VCS) 是一种记录一个或多个文件内容变化的系统，以便将来可以查阅、恢复到特定版本。 1.2 集中式 vs 分布式   特性 集中式 (SVN) 分布式 (Git)    存储方式 单一中央服务器 每个开发者本地都有完整仓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开发工具与网络协议">
+<meta property="og:url" content="http://example.com/2025/11/19/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="epophize的前端资料库">
+<meta property="og:description" content="开发工具与网络协议 目录 Git 版本控制 Git 工作流 分支管理 远程协作 HTTP 协议 HTTP 状态码   一、Git 版本控制1.1 什么是版本控制？版本控制系统 (VCS) 是一种记录一个或多个文件内容变化的系统，以便将来可以查阅、恢复到特定版本。 1.2 集中式 vs 分布式   特性 集中式 (SVN) 分布式 (Git)    存储方式 单一中央服务器 每个开发者本地都有完整仓">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/head.jpg">
+<meta property="article:published_time" content="2025-11-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-26T12:39:00.508Z">
+<meta property="article:author" content="epophize">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/head.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "开发工具与网络协议",
+  "url": "http://example.com/2025/11/19/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/",
+  "image": "http://example.com/img/head.jpg",
+  "datePublished": "2025-11-18T16:00:00.000Z",
+  "dateModified": "2026-04-26T12:39:00.508Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "epophize",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/blog-solid.png"><link rel="canonical" href="http://example.com/2025/11/19/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5-b1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '开发工具与网络协议',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/img/doro.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/doro.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/head.jpg" alt="Logo"><span class="site-name">epophize的前端资料库</span></a><a class="nav-page-title" href="/"><span class="site-name">开发工具与网络协议</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">开发工具与网络协议</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-11-18T16:00:00.000Z" title="发表于 2025-11-19 00:00:00">2025-11-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-26T12:39:00.508Z" title="更新于 2026-04-26 20:39:00">2026-04-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="开发工具与网络协议"><a href="#开发工具与网络协议" class="headerlink" title="开发工具与网络协议"></a>开发工具与网络协议</h1><hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#%E4%B8%80-git-%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6">Git 版本控制</a></li>
+<li><a href="#%E4%BA%8C-git-%E5%B7%A5%E4%BD%9C%E6%B5%81">Git 工作流</a></li>
+<li><a href="#%E4%B8%89-%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86">分支管理</a></li>
+<li><a href="#%E5%9B%9B-%E8%BF%9C%E7%A8%8B%E5%8D%8F%E4%BD%9C">远程协作</a></li>
+<li><a href="#%E4%BA%94-http-%E5%8D%8F%E8%AE%AE">HTTP 协议</a></li>
+<li><a href="#%E5%85%AD-http-%E7%8A%B6%E6%80%81%E7%A0%81">HTTP 状态码</a></li>
+</ol>
+<hr>
+<h2 id="一、Git-版本控制"><a href="#一、Git-版本控制" class="headerlink" title="一、Git 版本控制"></a>一、Git 版本控制</h2><h3 id="1-1-什么是版本控制？"><a href="#1-1-什么是版本控制？" class="headerlink" title="1.1 什么是版本控制？"></a>1.1 什么是版本控制？</h3><p><strong>版本控制系统 (VCS)</strong> 是一种记录一个或多个文件内容变化的系统，以便将来可以查阅、恢复到特定版本。</p>
+<h3 id="1-2-集中式-vs-分布式"><a href="#1-2-集中式-vs-分布式" class="headerlink" title="1.2 集中式 vs 分布式"></a>1.2 集中式 vs 分布式</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>集中式 (SVN)</th>
+<th>分布式 (Git)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>存储方式</strong></td>
+<td>单一中央服务器</td>
+<td>每个开发者本地都有完整仓库</td>
+</tr>
+<tr>
+<td><strong>网络依赖</strong></td>
+<td>强依赖网络</td>
+<td>大部分操作可离线完成</td>
+</tr>
+<tr>
+<td><strong>速度</strong></td>
+<td>较慢</td>
+<td>极快</td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>服务器故障可能导致数据丢失</td>
+<td>任何本地仓库都可作为备份</td>
+</tr>
+</tbody></table>
+<h3 id="1-3-Git-的工作区域"><a href="#1-3-Git-的工作区域" class="headerlink" title="1.3 Git 的工作区域"></a>1.3 Git 的工作区域</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────┐</span><br><span class="line">│                    远程仓库 (Remote)                    │</span><br><span class="line">│              (GitHub, Gitee, GitLab 等)                 │</span><br><span class="line">└─────────────────────────────────────────────────────────┘</span><br><span class="line">                          ↑↓ push/fetch/pull</span><br><span class="line">┌─────────────────────────────────────────────────────────┐</span><br><span class="line">│                    本地仓库 (Local Repository)          │</span><br><span class="line">│                    (.git 目录)                          │</span><br><span class="line">└─────────────────────────────────────────────────────────┘</span><br><span class="line">                          ↑↓ commit/reset</span><br><span class="line">┌─────────────────────────────────────────────────────────┐</span><br><span class="line">│                    暂存区 (Staging Area)                │</span><br><span class="line">│                    (Index)                              │</span><br><span class="line">└─────────────────────────────────────────────────────────┘</span><br><span class="line">                          ↑↓ add/reset</span><br><span class="line">┌─────────────────────────────────────────────────────────┐</span><br><span class="line">│                    工作区 (Working Directory)           │</span><br><span class="line">│                    (你编辑的文件)                       │</span><br><span class="line">└─────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>区域</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>工作区</strong></td>
+<td>当前在电脑上看到和编辑的项目文件</td>
+</tr>
+<tr>
+<td><strong>暂存区</strong></td>
+<td>临时区域，存放准备提交的文件快照</td>
+</tr>
+<tr>
+<td><strong>本地仓库</strong></td>
+<td>.git 目录，永久存储提交快照和完整历史</td>
+</tr>
+<tr>
+<td><strong>远程仓库</strong></td>
+<td>托管在服务器上的仓库，用于团队共享</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="二、Git-工作流"><a href="#二、Git-工作流" class="headerlink" title="二、Git 工作流"></a>二、Git 工作流</h2><h3 id="2-1-安装与配置"><a href="#2-1-安装与配置" class="headerlink" title="2.1 安装与配置"></a>2.1 安装与配置</h3><p><strong>安装：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Linux (Debian/Ubuntu)</span></span><br><span class="line"><span class="built_in">sudo</span> apt-get update</span><br><span class="line"><span class="built_in">sudo</span> apt-get install git</span><br><span class="line"></span><br><span class="line"><span class="comment"># Linux (CentOS/RHEL)</span></span><br><span class="line"><span class="built_in">sudo</span> yum install git</span><br><span class="line"></span><br><span class="line"><span class="comment"># macOS</span></span><br><span class="line">brew install git</span><br><span class="line"></span><br><span class="line"><span class="comment"># Windows</span></span><br><span class="line"><span class="comment"># 从 https://git-scm.com 下载安装包</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>基础配置：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置用户名和邮箱</span></span><br><span class="line">git config --global user.name <span class="string">&quot;你的姓名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;你的邮箱&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看配置</span></span><br><span class="line">git config --list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看特定配置</span></span><br><span class="line">git config user.name</span><br><span class="line">git config user.email</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-初始化仓库"><a href="#2-2-初始化仓库" class="headerlink" title="2.2 初始化仓库"></a>2.2 初始化仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在现有目录初始化</span></span><br><span class="line">git init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 克隆远程仓库</span></span><br><span class="line">git <span class="built_in">clone</span> &lt;repository-url&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 克隆到指定目录</span></span><br><span class="line">git <span class="built_in">clone</span> &lt;repository-url&gt; my-project</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-查看状态"><a href="#2-3-查看状态" class="headerlink" title="2.3 查看状态"></a>2.3 查看状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看工作区和暂存区状态</span></span><br><span class="line">git status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 简洁输出</span></span><br><span class="line">git status -s</span><br></pre></td></tr></table></figure>
+
+<p><strong>状态说明：</strong></p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Untracked</code></td>
+<td>新增的、未被 Git 跟踪的文件</td>
+</tr>
+<tr>
+<td><code>Staged</code></td>
+<td>已添加到暂存区，准备提交</td>
+</tr>
+<tr>
+<td><code>Modified</code></td>
+<td>已跟踪但被修改的文件</td>
+</tr>
+</tbody></table>
+<h3 id="2-4-添加到暂存区"><a href="#2-4-添加到暂存区" class="headerlink" title="2.4 添加到暂存区"></a>2.4 添加到暂存区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加单个文件</span></span><br><span class="line">git add filename</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加所有修改</span></span><br><span class="line">git add .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加所有修改（包括删除）</span></span><br><span class="line">git add -A</span><br><span class="line"></span><br><span class="line"><span class="comment"># 交互式添加</span></span><br><span class="line">git add -p</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-提交到本地仓库"><a href="#2-5-提交到本地仓库" class="headerlink" title="2.5 提交到本地仓库"></a>2.5 提交到本地仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 提交并添加消息</span></span><br><span class="line">git commit -m <span class="string">&quot;提交消息&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 提交所有已跟踪的修改（跳过 add）</span></span><br><span class="line">git commit -am <span class="string">&quot;提交消息&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改上一次提交</span></span><br><span class="line">git commit --amend -m <span class="string">&quot;新的提交消息&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看提交历史</span></span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">git <span class="built_in">log</span> --oneline      <span class="comment"># 简洁输出</span></span><br><span class="line">git <span class="built_in">log</span> -n 5           <span class="comment"># 最近 5 条</span></span><br><span class="line">git <span class="built_in">log</span> --author=<span class="string">&quot;Name&quot;</span></span><br><span class="line">git <span class="built_in">log</span> --since=<span class="string">&quot;2024-01-01&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-比较差异"><a href="#2-6-比较差异" class="headerlink" title="2.6 比较差异"></a>2.6 比较差异</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 工作区 vs 暂存区</span></span><br><span class="line">git diff</span><br><span class="line"></span><br><span class="line"><span class="comment"># 暂存区 vs 最近提交</span></span><br><span class="line">git diff --staged</span><br><span class="line">git diff --cached</span><br><span class="line"></span><br><span class="line"><span class="comment"># 两个提交之间</span></span><br><span class="line">git diff commit1 commit2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看某个文件的差异</span></span><br><span class="line">git diff filename</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-7-版本回退"><a href="#2-7-版本回退" class="headerlink" title="2.7 版本回退"></a>2.7 版本回退</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 软重置：保留暂存区和工作区</span></span><br><span class="line">git reset --soft HEAD~1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 混合重置：保留工作区（默认）</span></span><br><span class="line">git reset --mixed HEAD~1</span><br><span class="line">git reset HEAD~1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 硬重置：丢弃所有修改</span></span><br><span class="line">git reset --hard HEAD~1</span><br><span class="line">git reset --hard &lt;commit-hash&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看操作历史（可恢复误操作）</span></span><br><span class="line">git reflog</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-8-忽略文件"><a href="#2-8-忽略文件" class="headerlink" title="2.8 忽略文件"></a>2.8 忽略文件</h3><p><strong>.gitignore 文件：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># 忽略 node_modules 目录</span><br><span class="line">node_modules/</span><br><span class="line"></span><br><span class="line"># 忽略构建输出</span><br><span class="line">dist/</span><br><span class="line">build/</span><br><span class="line"></span><br><span class="line"># 忽略环境变量文件</span><br><span class="line">.env</span><br><span class="line">.env.local</span><br><span class="line"></span><br><span class="line"># 忽略日志文件</span><br><span class="line">*.log</span><br><span class="line"></span><br><span class="line"># 忽略系统文件</span><br><span class="line">.DS_Store</span><br><span class="line">Thumbs.db</span><br><span class="line"></span><br><span class="line"># 忽略 IDE 配置</span><br><span class="line">.vscode/</span><br><span class="line">.idea/</span><br><span class="line"></span><br><span class="line"># 但保留 .gitkeep 文件</span><br><span class="line">!.gitkeep</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、分支管理"><a href="#三、分支管理" class="headerlink" title="三、分支管理"></a>三、分支管理</h2><h3 id="3-1-分支操作"><a href="#3-1-分支操作" class="headerlink" title="3.1 分支操作"></a>3.1 分支操作</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看分支</span></span><br><span class="line">git branch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看包含远程分支</span></span><br><span class="line">git branch -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建分支</span></span><br><span class="line">git branch &lt;branch-name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换分支</span></span><br><span class="line">git checkout &lt;branch-name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建并切换分支</span></span><br><span class="line">git checkout -b &lt;branch-name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新版命令（Git 2.23+）</span></span><br><span class="line">git switch &lt;branch-name&gt;</span><br><span class="line">git switch -c &lt;branch-name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除分支</span></span><br><span class="line">git branch -d &lt;branch-name&gt;      <span class="comment"># 安全删除</span></span><br><span class="line">git branch -D &lt;branch-name&gt;      <span class="comment"># 强制删除</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重命名分支</span></span><br><span class="line">git branch -m &lt;old-name&gt; &lt;new-name&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-合并分支"><a href="#3-2-合并分支" class="headerlink" title="3.2 合并分支"></a>3.2 合并分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换到目标分支</span></span><br><span class="line">git checkout main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并 feature 分支</span></span><br><span class="line">git merge feature</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看合并冲突</span></span><br><span class="line">git status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决冲突后</span></span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;解决合并冲突&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 取消合并</span></span><br><span class="line">git merge --abort</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-变基-Rebase"><a href="#3-3-变基-Rebase" class="headerlink" title="3.3 变基 (Rebase)"></a>3.3 变基 (Rebase)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 变基操作</span></span><br><span class="line">git checkout feature</span><br><span class="line">git rebase main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 交互式变基</span></span><br><span class="line">git rebase -i HEAD~3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 取消变基</span></span><br><span class="line">git rebase --abort</span><br><span class="line"></span><br><span class="line"><span class="comment"># 继续变基（解决冲突后）</span></span><br><span class="line">git rebase --<span class="built_in">continue</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Merge vs Rebase：</strong></p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Merge</th>
+<th>Rebase</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>历史记录</strong></td>
+<td>保留完整分支历史</td>
+<td>线性历史</td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>更安全</td>
+<td>可能改写历史</td>
+</tr>
+<tr>
+<td><strong>使用场景</strong></td>
+<td>公共分支合并</td>
+<td>本地提交整理</td>
+</tr>
+</tbody></table>
+<h3 id="3-4-分支策略"><a href="#3-4-分支策略" class="headerlink" title="3.4 分支策略"></a>3.4 分支策略</h3><p><strong>Git Flow：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">main (生产)</span><br><span class="line">  ↑</span><br><span class="line">release</span><br><span class="line">  ↑</span><br><span class="line">develop (开发)</span><br><span class="line">  ↑</span><br><span class="line">feature/* (功能分支)</span><br></pre></td></tr></table></figure>
+
+<p><strong>GitHub Flow：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">main</span><br><span class="line">  ↑</span><br><span class="line">feature/* (功能分支，PR 后合并)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、远程协作"><a href="#四、远程协作" class="headerlink" title="四、远程协作"></a>四、远程协作</h2><h3 id="4-1-远程仓库操作"><a href="#4-1-远程仓库操作" class="headerlink" title="4.1 远程仓库操作"></a>4.1 远程仓库操作</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加远程仓库</span></span><br><span class="line">git remote add origin &lt;url&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看远程仓库</span></span><br><span class="line">git remote -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重命名远程仓库</span></span><br><span class="line">git remote rename origin upstream</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除远程仓库</span></span><br><span class="line">git remote remove origin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取远程更新</span></span><br><span class="line">git fetch origin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拉取并合并</span></span><br><span class="line">git pull origin main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送本地分支</span></span><br><span class="line">git push origin main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送并设置上游</span></span><br><span class="line">git push -u origin main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 强制推送（慎用）</span></span><br><span class="line">git push -f origin main</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-标签管理"><a href="#4-2-标签管理" class="headerlink" title="4.2 标签管理"></a>4.2 标签管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看标签</span></span><br><span class="line">git tag</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建标签</span></span><br><span class="line">git tag v1.0.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建带注释标签</span></span><br><span class="line">git tag -a v1.0.0 -m <span class="string">&quot;版本 1.0.0&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送标签</span></span><br><span class="line">git push origin v1.0.0</span><br><span class="line">git push origin --tags</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除标签</span></span><br><span class="line">git tag -d v1.0.0</span><br><span class="line">git push origin --delete v1.0.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-SSH-密钥配置"><a href="#4-3-SSH-密钥配置" class="headerlink" title="4.3 SSH 密钥配置"></a>4.3 SSH 密钥配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成 SSH 密钥</span></span><br><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看公钥</span></span><br><span class="line"><span class="built_in">cat</span> ~/.ssh/id_ed25519.pub</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加到 GitHub/Gitee</span></span><br><span class="line"><span class="comment"># 复制公钥内容，添加到账户设置</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试连接</span></span><br><span class="line">ssh -T git@github.com</span><br><span class="line">ssh -T git@gitee.com</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-常见工作流"><a href="#4-4-常见工作流" class="headerlink" title="4.4 常见工作流"></a>4.4 常见工作流</h3><p><strong>克隆项目：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> &lt;repository-url&gt;</span><br><span class="line"><span class="built_in">cd</span> &lt;project-name&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>日常开发：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 拉取最新代码</span></span><br><span class="line">git pull origin main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 创建功能分支</span></span><br><span class="line">git checkout -b feature/new-feature</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 开发并提交</span></span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;feat: 添加新功能&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 推送分支</span></span><br><span class="line">git push origin feature/new-feature</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 创建 Pull Request</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>同步上游仓库：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加上游仓库</span></span><br><span class="line">git remote add upstream &lt;upstream-url&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取上游更新</span></span><br><span class="line">git fetch upstream</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并到本地 main</span></span><br><span class="line">git checkout main</span><br><span class="line">git merge upstream/main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送更新</span></span><br><span class="line">git push origin main</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、HTTP-协议"><a href="#五、HTTP-协议" class="headerlink" title="五、HTTP 协议"></a>五、HTTP 协议</h2><h3 id="5-1-HTTP-请求方法"><a href="#5-1-HTTP-请求方法" class="headerlink" title="5.1 HTTP 请求方法"></a>5.1 HTTP 请求方法</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+<th>幂等性</th>
+<th>安全性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>GET</code></td>
+<td>获取资源</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>HEAD</code></td>
+<td>获取响应头</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td>提交数据</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td>更新资源</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td>删除资源</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td>部分更新</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>OPTIONS</code></td>
+<td>获取支持的方法</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<h3 id="5-2-请求报文结构"><a href="#5-2-请求报文结构" class="headerlink" title="5.2 请求报文结构"></a>5.2 请求报文结构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">POST /api/users HTTP/1.1</span><br><span class="line">Host: example.com</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 42</span><br><span class="line">Authorization: Bearer token123</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;Tom&quot;,</span><br><span class="line">  &quot;email&quot;: &quot;tom@example.com&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>组成部分：</strong></p>
+<ol>
+<li><strong>请求行</strong>：方法 + URL + 协议版本</li>
+<li><strong>请求头</strong>：键值对，描述请求信息</li>
+<li><strong>空行</strong>：分隔头部和主体</li>
+<li><strong>请求体</strong>：实际传输的数据</li>
+</ol>
+<h3 id="5-3-响应报文结构"><a href="#5-3-响应报文结构" class="headerlink" title="5.3 响应报文结构"></a>5.3 响应报文结构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 42</span><br><span class="line">Set-Cookie: sessionId=abc123</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;id&quot;: 1,</span><br><span class="line">  &quot;name&quot;: &quot;Tom&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-常用请求头"><a href="#5-4-常用请求头" class="headerlink" title="5.4 常用请求头"></a>5.4 常用请求头</h3><table>
+<thead>
+<tr>
+<th>请求头</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Content-Type</code></td>
+<td>请求体类型</td>
+</tr>
+<tr>
+<td><code>Authorization</code></td>
+<td>认证信息</td>
+</tr>
+<tr>
+<td><code>User-Agent</code></td>
+<td>客户端信息</td>
+</tr>
+<tr>
+<td><code>Accept</code></td>
+<td>期望的响应类型</td>
+</tr>
+<tr>
+<td><code>Cookie</code></td>
+<td>携带的 Cookie</td>
+</tr>
+<tr>
+<td><code>Referer</code></td>
+<td>来源页面</td>
+</tr>
+<tr>
+<td><code>Origin</code></td>
+<td>请求来源（CORS）</td>
+</tr>
+</tbody></table>
+<h3 id="5-5-常用响应头"><a href="#5-5-常用响应头" class="headerlink" title="5.5 常用响应头"></a>5.5 常用响应头</h3><table>
+<thead>
+<tr>
+<th>响应头</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Content-Type</code></td>
+<td>响应体类型</td>
+</tr>
+<tr>
+<td><code>Set-Cookie</code></td>
+<td>设置 Cookie</td>
+</tr>
+<tr>
+<td><code>Location</code></td>
+<td>重定向地址</td>
+</tr>
+<tr>
+<td><code>Cache-Control</code></td>
+<td>缓存控制</td>
+</tr>
+<tr>
+<td><code>Access-Control-Allow-Origin</code></td>
+<td>CORS 允许的来源</td>
+</tr>
+<tr>
+<td><code>X-Frame-Options</code></td>
+<td>防止点击劫持</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="六、HTTP-状态码"><a href="#六、HTTP-状态码" class="headerlink" title="六、HTTP 状态码"></a>六、HTTP 状态码</h2><h3 id="6-1-1xx-信息提示"><a href="#6-1-1xx-信息提示" class="headerlink" title="6.1 1xx 信息提示"></a>6.1 1xx 信息提示</h3><table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>100</td>
+<td>Continue</td>
+<td>继续发送请求</td>
+</tr>
+<tr>
+<td>101</td>
+<td>Switching Protocols</td>
+<td>切换协议</td>
+</tr>
+</tbody></table>
+<h3 id="6-2-2xx-成功"><a href="#6-2-2xx-成功" class="headerlink" title="6.2 2xx 成功"></a>6.2 2xx 成功</h3><table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200</td>
+<td>OK</td>
+<td>请求成功</td>
+</tr>
+<tr>
+<td>201</td>
+<td>Created</td>
+<td>资源创建成功</td>
+</tr>
+<tr>
+<td>202</td>
+<td>Accepted</td>
+<td>请求已接受，但未处理</td>
+</tr>
+<tr>
+<td>204</td>
+<td>No Content</td>
+<td>成功但无内容</td>
+</tr>
+<tr>
+<td>206</td>
+<td>Partial Content</td>
+<td>部分内容（断点续传）</td>
+</tr>
+</tbody></table>
+<h3 id="6-3-3xx-重定向"><a href="#6-3-3xx-重定向" class="headerlink" title="6.3 3xx 重定向"></a>6.3 3xx 重定向</h3><table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>301</td>
+<td>Moved Permanently</td>
+<td>永久重定向</td>
+</tr>
+<tr>
+<td>302</td>
+<td>Found</td>
+<td>临时重定向</td>
+</tr>
+<tr>
+<td>304</td>
+<td>Not Modified</td>
+<td>资源未修改（使用缓存）</td>
+</tr>
+<tr>
+<td>307</td>
+<td>Temporary Redirect</td>
+<td>临时重定向（保持方法）</td>
+</tr>
+<tr>
+<td>308</td>
+<td>Permanent Redirect</td>
+<td>永久重定向（保持方法）</td>
+</tr>
+</tbody></table>
+<h3 id="6-4-4xx-客户端错误"><a href="#6-4-4xx-客户端错误" class="headerlink" title="6.4 4xx 客户端错误"></a>6.4 4xx 客户端错误</h3><table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>400</td>
+<td>Bad Request</td>
+<td>请求语法错误</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized</td>
+<td>未授权（需要登录）</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden</td>
+<td>禁止访问（权限不足）</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found</td>
+<td>资源不存在</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method Not Allowed</td>
+<td>方法不允许</td>
+</tr>
+<tr>
+<td>408</td>
+<td>Request Timeout</td>
+<td>请求超时</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Conflict</td>
+<td>请求冲突</td>
+</tr>
+<tr>
+<td>415</td>
+<td>Unsupported Media Type</td>
+<td>不支持的媒体类型</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests</td>
+<td>请求过多（限流）</td>
+</tr>
+</tbody></table>
+<h3 id="6-5-5xx-服务器错误"><a href="#6-5-5xx-服务器错误" class="headerlink" title="6.5 5xx 服务器错误"></a>6.5 5xx 服务器错误</h3><table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>500</td>
+<td>Internal Server Error</td>
+<td>服务器内部错误</td>
+</tr>
+<tr>
+<td>501</td>
+<td>Not Implemented</td>
+<td>功能未实现</td>
+</tr>
+<tr>
+<td>502</td>
+<td>Bad Gateway</td>
+<td>网关错误</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable</td>
+<td>服务不可用</td>
+</tr>
+<tr>
+<td>504</td>
+<td>Gateway Timeout</td>
+<td>网关超时</td>
+</tr>
+</tbody></table>
+<h3 id="6-6-状态码速查图"><a href="#6-6-状态码速查图" class="headerlink" title="6.6 状态码速查图"></a>6.6 状态码速查图</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1xx → 信息提示      (继续、切换协议)</span><br><span class="line">2xx → 成功         (OK、Created、No Content)</span><br><span class="line">3xx → 重定向       (Moved、Found、Not Modified)</span><br><span class="line">4xx → 客户端错误    (Bad Request、Unauthorized、Not Found)</span><br><span class="line">5xx → 服务器错误    (Internal Error、Bad Gateway、Unavailable)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="附录：Git-提交消息规范"><a href="#附录：Git-提交消息规范" class="headerlink" title="附录：Git 提交消息规范"></a>附录：Git 提交消息规范</h2><h3 id="Conventional-Commits"><a href="#Conventional-Commits" class="headerlink" title="Conventional Commits"></a>Conventional Commits</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;footer&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Type 类型：</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>feat</code></td>
+<td>新功能</td>
+</tr>
+<tr>
+<td><code>fix</code></td>
+<td>修复 Bug</td>
+</tr>
+<tr>
+<td><code>docs</code></td>
+<td>文档更新</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>代码格式（不影响功能）</td>
+</tr>
+<tr>
+<td><code>refactor</code></td>
+<td>重构</td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>测试相关</td>
+</tr>
+<tr>
+<td><code>chore</code></td>
+<td>构建&#x2F;依赖变动</td>
+</tr>
+<tr>
+<td><code>perf</code></td>
+<td>性能优化</td>
+</tr>
+</tbody></table>
+<p><strong>示例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">feat(user): 添加用户登录功能</span><br><span class="line"></span><br><span class="line">- 实现用户名密码登录</span><br><span class="line">- 添加 Token 认证</span><br><span class="line">- 添加记住登录功能</span><br><span class="line"></span><br><span class="line">Closes #123</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><em>文档生成时间：2026-04-16</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">epophize</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2025/11/19/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/">http://example.com/2025/11/19/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">epophize的前端资料库</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/head.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/12/01/Node.js%20%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/" title="Nodejs后端指南"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Nodejs后端指南</div></div><div class="info-2"><div class="info-item-1">Node.js 后端开发完全指南 整合自：Node 和 Npm、Express 框架、Node 操作数据库   目录 Node.js 基础 模块系统 Npm 包管理 Express 框架 数据库操作 项目实战   一、Node.js 基础1.1 什么是 Node.js？Node.js 是一个 JavaScript 运行环境 (runtime)，让 JavaScript 可以开发后端程序。  基于 Google V8 引擎 事件驱动、非阻塞 I&#x2F;O 模型 轻量、高效  1.2 Node.js 的作用   优势 说明    前端必备技能 构建工程化开发环境，具备后端开发能力   学习成本低 语法完全是 JS 语法   功能丰富 动态网站、API 接口、云计算、游戏开发、区块链、即时通讯等   1.3 环境安装使用 NVM 管理（推荐）： 12345678910# 安装 NVMcurl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash# 安装 Node.jsnvm instal...</div></div></div></a><a class="pagination-related" href="/2025/11/01/JavaScript%20%E6%A0%B8%E5%BF%83%E4%B8%8E%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" title="js 基础与网络请求"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">js 基础与网络请求</div></div><div class="info-2"><div class="info-item-1">JavaScript 核心技术与网络请求 整合自：ES6、AJAX、Axios   目录 ES6 核心特性 模块化编程 异步编程 AJAX 基础 Axios 实战 网络请求最佳实践   一、ES6 核心特性1.1 变量声明：let 与 constES5 的 var 存在的问题：  变量提升（Hoisting） 无块级作用域 可重复声明  let 的特性：  ✅ 块级作用域：仅在 {} 内有效 ✅ 不可重复声明 ✅ 无变量提升（存在”暂时性死区”TDZ） ✅ 不影响全局对象  123456789// 块级作用域&#123;  let x = 1;&#125;// console.log(x); // ReferenceError// 暂时性死区console.log(y); // 报错！let y = 2;  const 的特性：  ✅ 具备 let 的所有特性 ✅ 必须初始化 ✅ 不可重新赋值   ⚠️ 重要澄清：const 保证的是变量指向的内存地址不变，不是值不可变！  12345678// 基本类型：值不可变const PI = 3.14;// PI = 3.15; // ...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">epophize</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/epophize" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:3280578130@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.</span> <span class="toc-text">开发工具与网络协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Git-%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-number">1.2.</span> <span class="toc-text">一、Git 版本控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%EF%BC%9F"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.1 什么是版本控制？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E9%9B%86%E4%B8%AD%E5%BC%8F-vs-%E5%88%86%E5%B8%83%E5%BC%8F"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2 集中式 vs 分布式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Git-%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.3 Git 的工作区域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Git-%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-number">1.3.</span> <span class="toc-text">二、Git 工作流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 安装与配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BB%93%E5%BA%93"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 初始化仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%9F%A5%E7%9C%8B%E7%8A%B6%E6%80%81"><span class="toc-number">1.3.3.</span> <span class="toc-text">2.3 查看状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E6%B7%BB%E5%8A%A0%E5%88%B0%E6%9A%82%E5%AD%98%E5%8C%BA"><span class="toc-number">1.3.4.</span> <span class="toc-text">2.4 添加到暂存区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E6%8F%90%E4%BA%A4%E5%88%B0%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93"><span class="toc-number">1.3.5.</span> <span class="toc-text">2.5 提交到本地仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E6%AF%94%E8%BE%83%E5%B7%AE%E5%BC%82"><span class="toc-number">1.3.6.</span> <span class="toc-text">2.6 比较差异</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80"><span class="toc-number">1.3.7.</span> <span class="toc-text">2.7 版本回退</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-8-%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.8.</span> <span class="toc-text">2.8 忽略文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">三、分支管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%88%86%E6%94%AF%E6%93%8D%E4%BD%9C"><span class="toc-number">1.4.1.</span> <span class="toc-text">3.1 分支操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.2 合并分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%8F%98%E5%9F%BA-Rebase"><span class="toc-number">1.4.3.</span> <span class="toc-text">3.3 变基 (Rebase)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%88%86%E6%94%AF%E7%AD%96%E7%95%A5"><span class="toc-number">1.4.4.</span> <span class="toc-text">3.4 分支策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%BF%9C%E7%A8%8B%E5%8D%8F%E4%BD%9C"><span class="toc-number">1.5.</span> <span class="toc-text">四、远程协作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E6%93%8D%E4%BD%9C"><span class="toc-number">1.5.1.</span> <span class="toc-text">4.1 远程仓库操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86"><span class="toc-number">1.5.2.</span> <span class="toc-text">4.2 标签管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-SSH-%E5%AF%86%E9%92%A5%E9%85%8D%E7%BD%AE"><span class="toc-number">1.5.3.</span> <span class="toc-text">4.3 SSH 密钥配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E5%B8%B8%E8%A7%81%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-number">1.5.4.</span> <span class="toc-text">4.4 常见工作流</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81HTTP-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.6.</span> <span class="toc-text">五、HTTP 协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-HTTP-%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="toc-number">1.6.1.</span> <span class="toc-text">5.1 HTTP 请求方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E7%BB%93%E6%9E%84"><span class="toc-number">1.6.2.</span> <span class="toc-text">5.2 请求报文结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%BB%93%E6%9E%84"><span class="toc-number">1.6.3.</span> <span class="toc-text">5.3 响应报文结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E5%B8%B8%E7%94%A8%E8%AF%B7%E6%B1%82%E5%A4%B4"><span class="toc-number">1.6.4.</span> <span class="toc-text">5.4 常用请求头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E5%B8%B8%E7%94%A8%E5%93%8D%E5%BA%94%E5%A4%B4"><span class="toc-number">1.6.5.</span> <span class="toc-text">5.5 常用响应头</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81HTTP-%E7%8A%B6%E6%80%81%E7%A0%81"><span class="toc-number">1.7.</span> <span class="toc-text">六、HTTP 状态码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-1xx-%E4%BF%A1%E6%81%AF%E6%8F%90%E7%A4%BA"><span class="toc-number">1.7.1.</span> <span class="toc-text">6.1 1xx 信息提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-2xx-%E6%88%90%E5%8A%9F"><span class="toc-number">1.7.2.</span> <span class="toc-text">6.2 2xx 成功</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-3xx-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">1.7.3.</span> <span class="toc-text">6.3 3xx 重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-4xx-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%94%99%E8%AF%AF"><span class="toc-number">1.7.4.</span> <span class="toc-text">6.4 4xx 客户端错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-5-5xx-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%94%99%E8%AF%AF"><span class="toc-number">1.7.5.</span> <span class="toc-text">6.5 5xx 服务器错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-6-%E7%8A%B6%E6%80%81%E7%A0%81%E9%80%9F%E6%9F%A5%E5%9B%BE"><span class="toc-number">1.7.6.</span> <span class="toc-text">6.6 状态码速查图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%E5%BD%95%EF%BC%9AGit-%E6%8F%90%E4%BA%A4%E6%B6%88%E6%81%AF%E8%A7%84%E8%8C%83"><span class="toc-number">1.8.</span> <span class="toc-text">附录：Git 提交消息规范</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Conventional-Commits"><span class="toc-number">1.8.1.</span> <span class="toc-text">Conventional Commits</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/21/vue/" title="Vue.js 前端框架">Vue.js 前端框架</a><time datetime="2025-12-20T16:00:00.000Z" title="发表于 2025-12-21 00:00:00">2025-12-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/15/ECharts%20%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8C%87%E5%8D%97/" title="Echarts">Echarts</a><time datetime="2025-12-14T16:00:00.000Z" title="发表于 2025-12-15 00:00:00">2025-12-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/01/Node.js%20%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/" title="Nodejs后端指南">Nodejs后端指南</a><time datetime="2025-11-30T16:00:00.000Z" title="发表于 2025-12-01 00:00:00">2025-12-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/19/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" title="开发工具与网络协议">开发工具与网络协议</a><time datetime="2025-11-18T16:00:00.000Z" title="发表于 2025-11-19 00:00:00">2025-11-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/01/JavaScript%20%E6%A0%B8%E5%BF%83%E4%B8%8E%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" title="js 基础与网络请求">js 基础与网络请求</a><time datetime="2025-10-31T16:00:00.000Z" title="发表于 2025-11-01 00:00:00">2025-11-01</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/doro.jpg);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By epophize</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5-b1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5-b1"></script><script src="/js/main.js?v=5.5.5-b1"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,541 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>html5与css3部分 | epophize的前端资料库</title><meta name="author" content="epophize"><meta name="copyright" content="epophize"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="HTML5 &amp; CSS3 部分 🟦 HTML5 核心知识点1. 语义化标签   标签 说明 默认显示类型    &lt;header&gt; 页面或区块的头部 block   &lt;footer&gt; 页面或区块的底部 block   &lt;nav&gt; 导航链接区域 block   &lt;section&gt; 文档中的通用独立区块 block   &lt;article&amp;g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="html5与css3部分">
+<meta property="og:url" content="http://example.com/2025/10/26/h5%E5%92%8Cc3/index.html">
+<meta property="og:site_name" content="epophize的前端资料库">
+<meta property="og:description" content="HTML5 &amp; CSS3 部分 🟦 HTML5 核心知识点1. 语义化标签   标签 说明 默认显示类型    &lt;header&gt; 页面或区块的头部 block   &lt;footer&gt; 页面或区块的底部 block   &lt;nav&gt; 导航链接区域 block   &lt;section&gt; 文档中的通用独立区块 block   &lt;article&amp;g">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/head.jpg">
+<meta property="article:published_time" content="2025-10-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-26T12:32:47.796Z">
+<meta property="article:author" content="epophize">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/head.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "html5与css3部分",
+  "url": "http://example.com/2025/10/26/h5%E5%92%8Cc3/",
+  "image": "http://example.com/img/head.jpg",
+  "datePublished": "2025-10-25T16:00:00.000Z",
+  "dateModified": "2026-04-26T12:32:47.796Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "epophize",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/blog-solid.png"><link rel="canonical" href="http://example.com/2025/10/26/h5%E5%92%8Cc3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5-b1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'html5与css3部分',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/img/doro.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/doro.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/head.jpg" alt="Logo"><span class="site-name">epophize的前端资料库</span></a><a class="nav-page-title" href="/"><span class="site-name">html5与css3部分</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">html5与css3部分</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-10-25T16:00:00.000Z" title="发表于 2025-10-26 00:00:00">2025-10-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-26T12:32:47.796Z" title="更新于 2026-04-26 20:32:47">2026-04-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="HTML5-CSS3-部分"><a href="#HTML5-CSS3-部分" class="headerlink" title="HTML5 &amp; CSS3 部分"></a>HTML5 &amp; CSS3 部分</h1><hr>
+<h2 id="🟦-HTML5-核心知识点"><a href="#🟦-HTML5-核心知识点" class="headerlink" title="🟦 HTML5 核心知识点"></a>🟦 HTML5 核心知识点</h2><h3 id="1-语义化标签"><a href="#1-语义化标签" class="headerlink" title="1. 语义化标签"></a>1. 语义化标签</h3><table>
+<thead>
+<tr>
+<th align="left">标签</th>
+<th align="left">说明</th>
+<th align="left">默认显示类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>&lt;header&gt;</code></td>
+<td align="left">页面或区块的头部</td>
+<td align="left"><code>block</code></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;footer&gt;</code></td>
+<td align="left">页面或区块的底部</td>
+<td align="left"><code>block</code></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;nav&gt;</code></td>
+<td align="left">导航链接区域</td>
+<td align="left"><code>block</code></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;section&gt;</code></td>
+<td align="left">文档中的通用独立区块</td>
+<td align="left"><code>block</code></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;article&gt;</code></td>
+<td align="left">可独立分发或复用的内容（如博客、新闻）</td>
+<td align="left"><code>block</code></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;aside&gt;</code></td>
+<td align="left">侧边栏或附属内容</td>
+<td align="left"><code>block</code></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;main&gt;</code></td>
+<td align="left">页面主体内容（每个页面仅一个）</td>
+<td align="left"><code>block</code></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;figure&gt;</code> &amp; <code>&lt;figcaption&gt;</code></td>
+<td align="left">图文组合及说明</td>
+<td align="left"><code>block</code></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;details&gt;</code> &amp; <code>&lt;summary&gt;</code></td>
+<td align="left">可折叠交互内容</td>
+<td align="left"><code>block</code></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;mark&gt;</code></td>
+<td align="left">高亮文本</td>
+<td align="left"><code>inline</code></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;time&gt;</code></td>
+<td align="left">日期&#x2F;时间机器可读</td>
+<td align="left"><code>inline</code></td>
+</tr>
+</tbody></table>
+<p>📝 <strong>修订提示</strong>：原内容中 <code>aricle</code> 已修正为 <code>article</code>。语义化核心作用：<strong>提升 SEO、增强可访问性（A11y）、优化代码可读性与维护性</strong>。</p>
+<hr>
+<h3 id="2-多媒体标签"><a href="#2-多媒体标签" class="headerlink" title="2. 多媒体标签"></a>2. 多媒体标签</h3><table>
+<thead>
+<tr>
+<th align="left">标签</th>
+<th align="left">核心属性</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>&lt;img&gt;</code></td>
+<td align="left"><code>src</code>, <code>alt</code>, <code>width</code>, <code>height</code>, <code>loading=&quot;lazy&quot;</code></td>
+<td align="left">图片标签，<strong>必须写 <code>alt</code></strong> 用于无障碍与 SEO</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;video&gt;</code></td>
+<td align="left"><code>src</code>, <code>controls</code>, <code>autoplay</code>, <code>loop</code>, <code>muted</code>, <code>preload</code>, <code>poster</code></td>
+<td align="left">视频标签。现代浏览器要求 <code>autoplay</code> 必须搭配 <code>muted</code></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;audio&gt;</code></td>
+<td align="left"><code>src</code>, <code>controls</code>, <code>autoplay</code>, <code>loop</code>, <code>preload</code></td>
+<td align="left">音频标签</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;source&gt;</code></td>
+<td align="left"><code>src</code>, <code>type</code>, <code>media</code></td>
+<td align="left">多格式资源回退，嵌套于 <code>video/audio/picture</code> 内</td>
+</tr>
+</tbody></table>
+<p>📝 <strong>修订提示</strong>：</p>
+<ul>
+<li>原描述“行内块级元素”不准确。<code>img/video/audio</code> 属于<strong>替换元素（Replaced Elements）</strong>，默认 <code>display: inline</code>，但具有固有宽高，实际开发中常设为 <code>display: block</code> 或 <code>inline-block</code>。</li>
+<li><code>&lt;source&gt;</code> 的 <code>type</code> 应使用标准 MIME 类型（如 <code>video/mp4</code>, <code>audio/webm</code>），配合 <code>media</code> 可实现响应式媒体加载。</li>
+</ul>
+<hr>
+<h3 id="3-表单结构标签"><a href="#3-表单结构标签" class="headerlink" title="3. 表单结构标签 &lt;form&gt;"></a>3. 表单结构标签 <code>&lt;form&gt;</code></h3><table>
+<thead>
+<tr>
+<th align="left">属性</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>action</code></td>
+<td align="left">表单提交的 URL 地址</td>
+</tr>
+<tr>
+<td align="left"><code>method</code></td>
+<td align="left"><code>GET</code>（URL 传参，适合查询） &#x2F; <code>POST</code>（请求体传参，适合提交&#x2F;文件）</td>
+</tr>
+<tr>
+<td align="left"><code>enctype</code></td>
+<td align="left"><code>application/x-www-form-urlencoded</code>（默认） &#x2F; <code>multipart/form-data</code>（含文件上传） &#x2F; <code>text/plain</code></td>
+</tr>
+<tr>
+<td align="left"><code>target</code></td>
+<td align="left"><code>_self</code>（默认） &#x2F; <code>_blank</code> &#x2F; <code>_parent</code> &#x2F; <code>_top</code></td>
+</tr>
+<tr>
+<td align="left"><code>autocomplete</code></td>
+<td align="left"><code>on</code> &#x2F; <code>off</code> 控制浏览器自动填充</td>
+</tr>
+<tr>
+<td align="left"><code>novalidate</code></td>
+<td align="left">提交时关闭浏览器默认表单校验</td>
+</tr>
+</tbody></table>
+<p>📝 <strong>补充</strong>：<code>form</code> 默认 <code>display: block</code>。现代开发常配合 <code>FormData</code> API 实现异步提交。</p>
+<hr>
+<h3 id="4-表单元素"><a href="#4-表单元素" class="headerlink" title="4. 表单元素"></a>4. 表单元素</h3><table>
+<thead>
+<tr>
+<th align="left">元素</th>
+<th align="left">常用 <code>type</code> &#x2F; 属性</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>&lt;input&gt;</code></td>
+<td align="left"><code>text</code>, <code>password</code>, <code>email</code>, <code>tel</code>, <code>url</code>, <code>number</code>, <code>date</code>, <code>datetime-local</code>, <code>time</code>, <code>month</code>, <code>week</code>, <code>color</code>, <code>range</code>, <code>search</code>, <code>file</code>, <code>checkbox</code>, <code>radio</code>, <code>submit</code>, <code>reset</code>, <code>button</code>, <code>hidden</code></td>
+<td align="left">单行输入&#x2F;控件</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;textarea&gt;</code></td>
+<td align="left"><code>rows</code>, <code>cols</code>, <code>wrap</code>, <code>maxlength</code>, <code>placeholder</code>, <code>resize</code></td>
+<td align="left">多行文本域</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;select&gt;</code> &amp; <code>&lt;option&gt;</code></td>
+<td align="left"><code>multiple</code>, <code>size</code>, <code>value</code>, <code>selected</code>, <code>disabled</code></td>
+<td align="left">下拉选择</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;datalist&gt;</code></td>
+<td align="left"><code>id</code> 配合 <code>&lt;input list=&quot;id&quot;&gt;</code></td>
+<td align="left">HTML5 新增，提供输入建议下拉</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;label&gt;</code></td>
+<td align="left"><code>for=&quot;id&quot;</code> 或包裹 <code>&lt;input&gt;</code></td>
+<td align="left"><strong>提升可访问性与点击热区</strong></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;fieldset&gt;</code> &amp; <code>&lt;legend&gt;</code></td>
+<td align="left">-</td>
+<td align="left">表单分组与标题</td>
+</tr>
+</tbody></table>
+<p>📝 <strong>修订提示</strong>：</p>
+<ul>
+<li>原内容 <code>datatime-local</code> → <code>datetime-local</code>，<code>seach</code> → <code>search</code>。</li>
+<li><code>input</code>, <code>textarea</code>, <code>select</code> 默认显示类型多为 <code>inline</code> 或 <code>inline-block</code>（浏览器实现略有差异），实际开发中常用 CSS 统一重置为 <code>display: block</code> 或 <code>inline-block</code> 便于布局。</li>
+</ul>
+<hr>
+<h3 id="5-表单常用属性汇总"><a href="#5-表单常用属性汇总" class="headerlink" title="5. 表单常用属性汇总"></a>5. 表单常用属性汇总</h3><table>
+<thead>
+<tr>
+<th align="left">属性</th>
+<th align="left">作用</th>
+<th align="left">适用元素</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>name</code></td>
+<td align="left">提交时的键名（Key）</td>
+<td align="left">所有可提交控件</td>
+</tr>
+<tr>
+<td align="left"><code>value</code></td>
+<td align="left">控件的初始值&#x2F;提交值</td>
+<td align="left"><code>input</code>, <code>option</code>, <code>textarea</code>, <code>button</code></td>
+</tr>
+<tr>
+<td align="left"><code>placeholder</code></td>
+<td align="left">输入提示文本</td>
+<td align="left"><code>input</code>, <code>textarea</code></td>
+</tr>
+<tr>
+<td align="left"><code>required</code></td>
+<td align="left">必填校验</td>
+<td align="left">大多数输入控件</td>
+</tr>
+<tr>
+<td align="left"><code>checked</code></td>
+<td align="left">默认选中</td>
+<td align="left"><code>radio</code>, <code>checkbox</code></td>
+</tr>
+<tr>
+<td align="left"><code>selected</code></td>
+<td align="left">默认选中</td>
+<td align="left"><code>option</code></td>
+</tr>
+<tr>
+<td align="left"><code>disabled</code></td>
+<td align="left">禁用，不参与提交</td>
+<td align="left">所有表单控件</td>
+</tr>
+<tr>
+<td align="left"><code>readonly</code></td>
+<td align="left">只读，值可提交</td>
+<td align="left"><code>input</code>, <code>textarea</code></td>
+</tr>
+<tr>
+<td align="left"><code>min</code> &#x2F; <code>max</code></td>
+<td align="left">数值&#x2F;日期范围限制</td>
+<td align="left"><code>number</code>, <code>date</code>, <code>range</code></td>
+</tr>
+<tr>
+<td align="left"><code>step</code></td>
+<td align="left">步进值</td>
+<td align="left"><code>number</code>, <code>range</code>, <code>date</code> 系列</td>
+</tr>
+<tr>
+<td align="left"><code>minlength</code> &#x2F; <code>maxlength</code></td>
+<td align="left">字符长度限制</td>
+<td align="left"><code>input[type=text/email/tel]</code>, <code>textarea</code></td>
+</tr>
+<tr>
+<td align="left"><code>pattern</code></td>
+<td align="left">正则表达式校验</td>
+<td align="left"><code>input</code>（文本类）</td>
+</tr>
+<tr>
+<td align="left"><code>autofocus</code></td>
+<td align="left">页面加载自动聚焦</td>
+<td align="left">单个元素</td>
+</tr>
+<tr>
+<td align="left"><code>form</code></td>
+<td align="left">关联外部 <code>&lt;form&gt;</code> 的 <code>id</code></td>
+<td align="left">表单控件</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🟪-CSS3-核心知识点"><a href="#🟪-CSS3-核心知识点" class="headerlink" title="🟪 CSS3 核心知识点"></a>🟪 CSS3 核心知识点</h2><h3 id="1-渐变（Gradients）"><a href="#1-渐变（Gradients）" class="headerlink" title="1. 渐变（Gradients）"></a>1. 渐变（Gradients）</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 线性渐变 */</span></span><br><span class="line"><span class="attribute">background-image</span>: <span class="built_in">linear-gradient</span>(to right, <span class="number">#ff7e5f</span>, <span class="number">#feb47b</span>);</span><br><span class="line"><span class="attribute">background-image</span>: <span class="built_in">linear-gradient</span>(<span class="number">45deg</span>, red, blue <span class="number">50%</span>, green);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 径向渐变 */</span></span><br><span class="line"><span class="attribute">background-image</span>: <span class="built_in">radial-gradient</span>(circle at center, yellow, red);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 锥形渐变（现代浏览器支持） */</span></span><br><span class="line"><span class="attribute">background-image</span>: <span class="built_in">conic-gradient</span>(from <span class="number">0deg</span>, red, yellow, green, blue, red);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 重复渐变 */</span></span><br><span class="line"><span class="attribute">background-image</span>: <span class="built_in">repeating-linear-gradient</span>(<span class="number">45deg</span>, <span class="number">#ccc</span> <span class="number">0px</span>, <span class="number">#ccc</span> <span class="number">10px</span>, <span class="number">#fff</span> <span class="number">10px</span>, <span class="number">#fff</span> <span class="number">20px</span>);</span><br></pre></td></tr></table></figure>
+<p>📝 <strong>补充说明</strong>：</p>
+<ul>
+<li>方向支持关键字：<code>to top</code>, <code>to bottom</code>, <code>to left</code>, <code>to right</code>, <code>to top left</code> 等，或角度 <code>45deg</code>。</li>
+<li>颜色可带位置百分比，未指定则自动均分。</li>
+<li>可配合 <code>background-size</code> 实现条纹、网格等背景效果。</li>
+</ul>
+<hr>
+<h3 id="2-2D-转换（Transform）"><a href="#2-2D-转换（Transform）" class="headerlink" title="2. 2D 转换（Transform）"></a>2. 2D 转换（Transform）</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 位移 */</span></span><br><span class="line"><span class="attribute">transform</span>: <span class="built_in">translateX</span>(<span class="number">20px</span>) <span class="built_in">translateY</span>(-<span class="number">10px</span>);</span><br><span class="line"><span class="attribute">transform</span>: <span class="built_in">translate</span>(<span class="number">50%</span>, <span class="number">50%</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 缩放 */</span></span><br><span class="line"><span class="attribute">transform</span>: <span class="built_in">scale</span>(<span class="number">1.2</span>);        <span class="comment">/* X,Y 等比 */</span></span><br><span class="line"><span class="attribute">transform</span>: <span class="built_in">scaleX</span>(<span class="number">1.5</span>);       <span class="comment">/* 仅 X 轴 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 旋转 */</span></span><br><span class="line"><span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">45deg</span>);     <span class="comment">/* 顺时针正角度 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 倾斜 */</span></span><br><span class="line"><span class="attribute">transform</span>: <span class="built_in">skewX</span>(<span class="number">10deg</span>) <span class="built_in">skewY</span>(<span class="number">5deg</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 变换原点（默认 50% 50%） */</span></span><br><span class="line"><span class="attribute">transform-origin</span>: left top;   <span class="comment">/* 或 0 0 / 10px 20px */</span></span><br></pre></td></tr></table></figure>
+<p>🔑 <strong>经典居中方案</strong>：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.center</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(-<span class="number">50%</span>, -<span class="number">50%</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>📝 <strong>修订提示</strong>：</p>
+<ul>
+<li>原内容 <code>tanslate</code> 拼写错误，已修正为 <code>translate</code>。</li>
+<li>居中方案中 Y 轴也需偏移，应为 <code>translate(-50%, -50%)</code>。</li>
+<li><code>transform</code> <strong>不影响文档流</strong>，仅生成视觉层，适合动画与布局微调。</li>
+</ul>
+<hr>
+<h3 id="3-过渡（Transition）"><a href="#3-过渡（Transition）" class="headerlink" title="3. 过渡（Transition）"></a>3. 过渡（Transition）</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 完整语法 */</span></span><br><span class="line"><span class="attribute">transition</span>: property duration timing-function delay;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 常用简写 */</span></span><br><span class="line"><span class="attribute">transition</span>: all <span class="number">0.3s</span> ease;</span><br><span class="line"><span class="attribute">transition</span>: transform <span class="number">0.2s</span> linear, opacity <span class="number">0.3s</span> ease-in-out <span class="number">0.1s</span>;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>property</code></td>
+<td align="left">过渡的属性（<code>all</code>, <code>opacity</code>, <code>transform</code>, <code>background-color</code> 等）</td>
+</tr>
+<tr>
+<td align="left"><code>duration</code></td>
+<td align="left">动画时长（<code>0.3s</code>, <code>300ms</code>）</td>
+</tr>
+<tr>
+<td align="left"><code>timing-function</code></td>
+<td align="left">速度曲线：<code>ease</code>（默认）, <code>linear</code>, <code>ease-in</code>, <code>ease-out</code>, <code>ease-in-out</code>, <code>cubic-bezier()</code></td>
+</tr>
+<tr>
+<td align="left"><code>delay</code></td>
+<td align="left">延迟时间（可选）</td>
+</tr>
+</tbody></table>
+<p>📝 <strong>注意事项</strong>：</p>
+<ul>
+<li>过渡必须绑定在<strong>触发状态</strong>（如 <code>:hover</code>, <code>:focus</code>, <code>.active</code>）或 JS 切换 class 时生效。</li>
+<li>建议明确指定属性而非全用 <code>all</code>，提升性能。</li>
+<li><code>transform</code> 和 <code>opacity</code> 触发 GPU 加速，性能最优。</li>
+</ul>
+<hr>
+<h2 id="📦-重要补充（现代开发高频特性）"><a href="#📦-重要补充（现代开发高频特性）" class="headerlink" title="📦 重要补充（现代开发高频特性）"></a>📦 重要补充（现代开发高频特性）</h2><h3 id="HTML5-补充"><a href="#HTML5-补充" class="headerlink" title="HTML5 补充"></a>HTML5 补充</h3><table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>&lt;picture&gt;</code> &amp; <code>&lt;source media&gt;</code></td>
+<td align="left">响应式图片加载（按屏幕&#x2F;分辨率切换）</td>
+</tr>
+<tr>
+<td align="left"><code>loading=&quot;lazy&quot;</code></td>
+<td align="left">图片&#x2F;iframe 懒加载（原生支持）</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;dialog&gt;</code></td>
+<td align="left">原生模态对话框，支持 <code>.showModal()</code></td>
+</tr>
+<tr>
+<td align="left">Web Storage</td>
+<td align="left"><code>localStorage</code> &#x2F; <code>sessionStorage</code> 替代部分 Cookie 场景</td>
+</tr>
+<tr>
+<td align="left"><code>FormData</code> &amp; <code>fetch</code></td>
+<td align="left">现代表单异步提交标准方案</td>
+</tr>
+</tbody></table>
+<h3 id="CSS3-补充"><a href="#CSS3-补充" class="headerlink" title="CSS3 补充"></a>CSS3 补充</h3><table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>@keyframes</code> &amp; <code>animation</code></td>
+<td align="left">关键帧动画（<code>animation: name duration timing-function delay iteration-count direction fill-mode play-state</code>）</td>
+</tr>
+<tr>
+<td align="left">Flexbox &#x2F; Grid</td>
+<td align="left">现代布局核心，替代传统 float&#x2F;position 方案</td>
+</tr>
+<tr>
+<td align="left"><code>box-shadow</code> &#x2F; <code>text-shadow</code></td>
+<td align="left">阴影效果，支持多层</td>
+</tr>
+<tr>
+<td align="left"><code>calc()</code></td>
+<td align="left">动态计算（如 <code>width: calc(100% - 2rem)</code>）</td>
+</tr>
+<tr>
+<td align="left"><code>var()</code> 自定义属性</td>
+<td align="left">CSS 变量，支持主题切换与响应式</td>
+</tr>
+<tr>
+<td align="left"><code>@media</code> 媒体查询</td>
+<td align="left">响应式设计基石</td>
+</tr>
+<tr>
+<td align="left"><code>filter</code> &#x2F; <code>backdrop-filter</code></td>
+<td align="left">滤镜与毛玻璃效果</td>
+</tr>
+<tr>
+<td align="left"><code>object-fit</code> &#x2F; <code>object-position</code></td>
+<td align="left">替换元素内容适配（替代传统背景图 hack）</td>
+</tr>
+</tbody></table>
+<hr>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">epophize</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2025/10/26/h5%E5%92%8Cc3/">http://example.com/2025/10/26/h5%E5%92%8Cc3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">epophize的前端资料库</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/head.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/11/01/JavaScript%20%E6%A0%B8%E5%BF%83%E4%B8%8E%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" title="js 基础与网络请求"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">js 基础与网络请求</div></div><div class="info-2"><div class="info-item-1">JavaScript 核心技术与网络请求 整合自：ES6、AJAX、Axios   目录 ES6 核心特性 模块化编程 异步编程 AJAX 基础 Axios 实战 网络请求最佳实践   一、ES6 核心特性1.1 变量声明：let 与 constES5 的 var 存在的问题：  变量提升（Hoisting） 无块级作用域 可重复声明  let 的特性：  ✅ 块级作用域：仅在 {} 内有效 ✅ 不可重复声明 ✅ 无变量提升（存在”暂时性死区”TDZ） ✅ 不影响全局对象  123456789// 块级作用域&#123;  let x = 1;&#125;// console.log(x); // ReferenceError// 暂时性死区console.log(y); // 报错！let y = 2;  const 的特性：  ✅ 具备 let 的所有特性 ✅ 必须初始化 ✅ 不可重新赋值   ⚠️ 重要澄清：const 保证的是变量指向的内存地址不变，不是值不可变！  12345678// 基本类型：值不可变const PI = 3.14;// PI = 3.15; // ...</div></div></div></a><a class="pagination-related" href="/2025/10/25/css/" title="css 基础"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">css 基础</div></div><div class="info-2"><div class="info-item-1">📘 CSS 核心知识点总结一、 前端三层架构   层次 技术 作用    结构层 HTML 搭建页面骨架与内容结构   表现层 CSS 美化页面，控制布局与视觉效果   行为层 JavaScript 实现交互逻辑与前后端数据通信    二、 CSS 概述 全称：Cascading Style Sheets（层叠样式表） 作用：定义如何显示 HTML 元素 发展意义：HTML 4.0 引入，核心目的是内容与表现分离 特点： 样式通常存储在外部 .css 文件中，可极大提高开发效率与维护性 多个样式定义可按规则层叠为一个最终样式 通配符选择器 * 可选取页面所有元素     三、 CSS 引入方式   方式 实现方法 特点    外部样式表（推荐） &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt; 写在 &lt;head&gt; 缓存复用，最常用   内部样式表 &lt;head&gt; 中使用 &lt;style&gt; 标签包裹 CSS 代码 适用于单页特定样式   内联样式 标签内直接写 st...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">epophize</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/epophize" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:3280578130@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HTML5-CSS3-%E9%83%A8%E5%88%86"><span class="toc-number">1.</span> <span class="toc-text">HTML5 &amp; CSS3 部分</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%9F%A6-HTML5-%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text">🟦 HTML5 核心知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%AF%AD%E4%B9%89%E5%8C%96%E6%A0%87%E7%AD%BE"><span class="toc-number">1.1.1.</span> <span class="toc-text">1. 语义化标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%A4%9A%E5%AA%92%E4%BD%93%E6%A0%87%E7%AD%BE"><span class="toc-number">1.1.2.</span> <span class="toc-text">2. 多媒体标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%A1%A8%E5%8D%95%E7%BB%93%E6%9E%84%E6%A0%87%E7%AD%BE"><span class="toc-number">1.1.3.</span> <span class="toc-text">3. 表单结构标签 &lt;form&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%A1%A8%E5%8D%95%E5%85%83%E7%B4%A0"><span class="toc-number">1.1.4.</span> <span class="toc-text">4. 表单元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%A1%A8%E5%8D%95%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7%E6%B1%87%E6%80%BB"><span class="toc-number">1.1.5.</span> <span class="toc-text">5. 表单常用属性汇总</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%9F%AA-CSS3-%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text">🟪 CSS3 核心知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%B8%90%E5%8F%98%EF%BC%88Gradients%EF%BC%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">1. 渐变（Gradients）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2D-%E8%BD%AC%E6%8D%A2%EF%BC%88Transform%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">2. 2D 转换（Transform）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%BF%87%E6%B8%A1%EF%BC%88Transition%EF%BC%89"><span class="toc-number">1.2.3.</span> <span class="toc-text">3. 过渡（Transition）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%A6-%E9%87%8D%E8%A6%81%E8%A1%A5%E5%85%85%EF%BC%88%E7%8E%B0%E4%BB%A3%E5%BC%80%E5%8F%91%E9%AB%98%E9%A2%91%E7%89%B9%E6%80%A7%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">📦 重要补充（现代开发高频特性）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML5-%E8%A1%A5%E5%85%85"><span class="toc-number">1.3.1.</span> <span class="toc-text">HTML5 补充</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS3-%E8%A1%A5%E5%85%85"><span class="toc-number">1.3.2.</span> <span class="toc-text">CSS3 补充</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/21/vue/" title="Vue.js 前端框架">Vue.js 前端框架</a><time datetime="2025-12-20T16:00:00.000Z" title="发表于 2025-12-21 00:00:00">2025-12-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/15/ECharts%20%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8C%87%E5%8D%97/" title="Echarts">Echarts</a><time datetime="2025-12-14T16:00:00.000Z" title="发表于 2025-12-15 00:00:00">2025-12-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/01/Node.js%20%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/" title="Nodejs后端指南">Nodejs后端指南</a><time datetime="2025-11-30T16:00:00.000Z" title="发表于 2025-12-01 00:00:00">2025-12-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/19/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" title="开发工具与网络协议">开发工具与网络协议</a><time datetime="2025-11-18T16:00:00.000Z" title="发表于 2025-11-19 00:00:00">2025-11-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/01/JavaScript%20%E6%A0%B8%E5%BF%83%E4%B8%8E%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" title="js 基础与网络请求">js 基础与网络请求</a><time datetime="2025-10-31T16:00:00.000Z" title="发表于 2025-11-01 00:00:00">2025-11-01</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/doro.jpg);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By epophize</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5-b1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5-b1"></script><script src="/js/main.js?v=5.5.5-b1"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
